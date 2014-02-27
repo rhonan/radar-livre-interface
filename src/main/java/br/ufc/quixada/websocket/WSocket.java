@@ -27,7 +27,7 @@ public class WSocket {
 	@OnOpen
     public void onOpen (Session peer) throws IOException {
         peers.add(peer);
-        Observacao observacao = new Observacao(-14.239424,-53.186502,"TESTE", "ADD");
+        Observacao observacao = new Observacao(-14.239424,-53.186502, 180,"TESTE", "ADD");
         Gson gson = new Gson();
         peer.getBasicRemote().sendText(gson.toJson(observacao));
     }

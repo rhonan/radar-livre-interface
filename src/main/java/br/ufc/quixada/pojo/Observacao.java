@@ -6,10 +6,12 @@ public class Observacao {
 	private double longitude;
 	private String aeronave_hex;
 	private String status;
+	private int grau;
 	
-	public Observacao(double latitude, double longitude, String aeronave_hex, String status){
+	public Observacao(double latitude, double longitude, int grau, String aeronave_hex, String status){
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.setGrau(grau);
 		this.aeronave_hex = aeronave_hex;
 		this.status = status;
 	}
@@ -40,6 +42,14 @@ public class Observacao {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getGrau() {
+		return grau;
+	}
+
+	public void setGrau(int grau) {
+		this.grau = grau;
 	}
 
 }
