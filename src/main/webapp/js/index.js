@@ -1,4 +1,5 @@
 var map;
+var marcadores = [];
 
 $(document).ready(function(){
 	
@@ -32,6 +33,21 @@ function onOpen(event){
 function onMessage(event){
 	console.log(JSON.parse(event.data));
 	var aeronave = JSON.parse(event.data);
+	
+	switch(aeronave.status){
+	case "ADD":
+		adicionarMarcador(aeronave);
+		break;
+	case "REMOVE":
+		removerMarcador(aeronave);
+		break;
+	case "UPDATE":
+		atualizarMarcador(aeronave);
+		break;
+	}
+}
+
+function adicionarMarcador(aeronave){
 	var image = new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12));
 	var marcador = new google.maps.Marker({
 		position: new google.maps.LatLng(aeronave.latitude, aeronave.longitude),
@@ -39,7 +55,36 @@ function onMessage(event){
         icon: image,
         title: aeronave.hex
 	});
+	marcadores.push(marcador);
 }
+
+function removerMarcador(aeronave){
+	$.each(marcadores, function (key, val){
+		if(val.title == aeronave.hex){
+			val.setMap(null);
+		}
+	});
+	marcadores.remove(aeronave);
+}
+
+function atualizarMarcador(aeronave){ 
+	$.each(marcadores, function (key, val){
+		if(val.title == aeronave.hex){
+			val.setPosition(new google.maps.LatLng(aeronave.latitude, aeronave.longitude));
+			val.setIcon(new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12)));
+		}
+	});
+}
+//Removes an element from an array.
+//String value: the value to search and remove.
+//return: an array with the removed element; false otherwise.
+Array.prototype.remove = function(value) {
+	var idx = this.indexOf(value);
+	if (idx != -1) {
+		return this.splice(idx, 1); // The second parameter is the number of elements to remove.
+	}
+	return false;
+};
 
 //$.sidr('open', 'sidr');
 //$.sidr('close', 'sidr');
