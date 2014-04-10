@@ -53,14 +53,14 @@ function adicionarMarcador(aeronave){
 		position: new google.maps.LatLng(aeronave.latitude, aeronave.longitude),
         map: map,
         icon: image,
-        title: aeronave.hex
+        title: aeronave.aeronave_hex
 	});
 	marcadores.push(marcador);
 }
 
 function removerMarcador(aeronave){
 	$.each(marcadores, function (key, val){
-		if(val.title == aeronave.hex){
+		if(val.title == aeronave.aeronave_hex){
 			val.setMap(null);
 		}
 	});
@@ -69,7 +69,7 @@ function removerMarcador(aeronave){
 
 function atualizarMarcador(aeronave){ 
 	$.each(marcadores, function (key, val){
-		if(val.title == aeronave.hex){
+		if(val.title == aeronave.aeronave_hex){
 			val.setPosition(new google.maps.LatLng(aeronave.latitude, aeronave.longitude));
 			val.setIcon(new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12)));
 		}
