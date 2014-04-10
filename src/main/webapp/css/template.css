@@ -11,3 +11,10 @@ body{
 #mapa{
 	height: 100% 
 }
+
+.close{
+	color: white;
+	font-size: 35px;
+	height: 27px;
+	width: 30px;
+}

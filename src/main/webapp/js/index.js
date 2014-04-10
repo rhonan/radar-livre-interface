@@ -2,6 +2,9 @@ var map;
 var marcadores = [];
 
 $(document).ready(function(){
+	$(".close").click(function(){
+		$.sidr('close', 'sidr');
+	});
 	
 	inicializarMapa();
 	
@@ -24,6 +27,10 @@ function inicializarMapa() {
     };
     map = new google.maps.Map(document.getElementById("mapa"),
         mapOptions);
+    
+	google.maps.event.addListener(map,'click', function(){
+		$.sidr('close', 'sidr');
+	});
 }
 
 function onOpen(event){
@@ -56,6 +63,13 @@ function adicionarMarcador(aeronave){
         title: aeronave.aeronave_hex
 	});
 	marcadores.push(marcador);
+	google.maps.event.addListener(marcador, 'click', function() {
+		$.sidr('open', 'sidr');
+		$("#hex").text(aeronave.aeronave_hex);
+		$("#latitude").text(aeronave.latitude);
+		$("#longitude").text(aeronave.longitude);
+		$("#grau").text(aeronave.grau);
+	});
 }
 
 function removerMarcador(aeronave){
