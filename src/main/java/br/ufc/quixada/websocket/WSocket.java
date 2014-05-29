@@ -29,7 +29,7 @@ public class WSocket {
     public void onOpen (Session session) throws IOException {
         this.session = session;
         connections.add(this);
-        Observacao observacao = new Observacao(-14.239424,-53.186502, 180,"TESTE", "ADD");
+        Observacao observacao = new Observacao(-14.239424,-53.186502, 200, 1000, 180,"TESTE", "ADD");
         Gson gson = new Gson();
         session.getBasicRemote().sendText(gson.toJson(observacao));
     }
@@ -48,7 +48,7 @@ public class WSocket {
 
     	for(WSocket client : connections){
     		try{
-    			client.session.getBasicRemote().sendText(gson.toJson(new Observacao(Double.parseDouble(mensagem_quebrada[0]),Double.parseDouble(mensagem_quebrada[1]), Integer.parseInt(mensagem_quebrada[2]),mensagem_quebrada[3], mensagem_quebrada[4])));
+    			client.session.getBasicRemote().sendText(gson.toJson(new Observacao(Double.parseDouble(mensagem_quebrada[0]),Double.parseDouble(mensagem_quebrada[1]), Double.parseDouble(mensagem_quebrada[2]),Integer.parseInt(mensagem_quebrada[3]), Integer.parseInt(mensagem_quebrada[4]), mensagem_quebrada[5], mensagem_quebrada[6])));
     		}catch(IOException e){
     			connections.remove(client);
     			try{

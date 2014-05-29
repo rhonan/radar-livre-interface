@@ -7,11 +7,15 @@ public class Observacao {
 	private String aeronave_hex;
 	private String status;
 	private int grau;
+	private double velocidade;
+	private int altitude;
 	
-	public Observacao(double latitude, double longitude, int grau, String aeronave_hex, String status){
+	public Observacao(double latitude, double longitude, double velocidade, int altitude, int grau, String aeronave_hex, String status){
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.setGrau(grau);
+		this.velocidade = velocidade;
+		this.altitude = altitude;
+		this.grau = grau;
 		this.aeronave_hex = aeronave_hex;
 		this.status = status;
 	}
@@ -50,6 +54,22 @@ public class Observacao {
 
 	public void setGrau(int grau) {
 		this.grau = grau;
+	}
+
+	public double getVelocidade() {
+		return velocidade;
+	}
+
+	public void setVelocidade(double velocidade) {
+		this.velocidade = velocidade;
+	}
+
+	public int getAltitude() {
+		return altitude;
+	}
+
+	public void setAltitude(int altitude) {
+		this.altitude = altitude;
 	}
 
 }
