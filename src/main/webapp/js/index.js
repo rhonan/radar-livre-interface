@@ -38,10 +38,13 @@ function onOpen(event){
 }
 
 function onMessage(event){
-	console.log(JSON.parse(event.data));
 	var aeronave = JSON.parse(event.data);
 	
-	switch(aeronave.status){
+	$.each(aeronave, function(key, val){
+		adicionarMarcador(val);
+	});
+	
+/*	switch(aeronave.status){
 	case "ADD":
 		adicionarMarcador(aeronave);
 		break;
@@ -51,10 +54,13 @@ function onMessage(event){
 	case "UPDATE":
 		atualizarMarcador(aeronave);
 		break;
-	}
+	}*/
 }
 
 function adicionarMarcador(aeronave){
+	if(aeronave.grau == null){
+		aeronave.grau = 1;
+	}
 	var image = new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12));
 	var marcador = new google.maps.Marker({
 		position: new google.maps.LatLng(aeronave.latitude, aeronave.longitude),

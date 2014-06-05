@@ -11,6 +11,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import br.ufc.quixada.dao.ObservacaoDao;
 import br.ufc.quixada.pojo.Observacao;
 
 import com.google.gson.Gson;
@@ -29,9 +30,9 @@ public class WSocket {
     public void onOpen (Session session) throws IOException {
         this.session = session;
         connections.add(this);
-        Observacao observacao = new Observacao(-14.239424,-53.186502, 200, 1000, 180,"TESTE", "ADD");
-        Gson gson = new Gson();
-        session.getBasicRemote().sendText(gson.toJson(observacao));
+        //Observacao observacao = new Observacao(-14.239424,-53.186502, 200, 1000, 180,"TESTE", "ADD");
+        //Gson gson = new Gson();
+        session.getBasicRemote().sendText(ObservacaoDao.retornarObservacoesMaisAtuais().toString());
     }
 
     @OnClose
