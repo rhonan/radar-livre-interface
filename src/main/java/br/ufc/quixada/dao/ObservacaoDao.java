@@ -15,7 +15,6 @@ public class ObservacaoDao {
 	public static void adicionarObservacao(String radar, String latitude, String longitude, String altitude, String velocidade, String angulo, String hora, String rota_id, String hex){
 		Connection connection;
 		String sql = "INSERT INTO observacao (radar,latitude,longitude,altitude,velocidade,angulo,hora,rota_id,hex) VALUES ("+ radar +","+ latitude +","+ longitude +","+ altitude +","+ velocidade+","+ angulo +","+ hora+","+rota_id+","+hex+")";
-		System.out.println(sql);
 		try {
 			
 			connection = ConexaoBanco.AbrirConexao();
