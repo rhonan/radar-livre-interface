@@ -28,7 +28,7 @@ public class SimuladorServlet extends HttpServlet {
     
     //Simular recebimento de msg
     //http://localhost:8080/Radar-Livre/simulador?action=simular&lat=-10.239424&lon=-50.186502&grau=180&altitude=1000&velocidade=200&hex=TESTE&status=ADD
-    private void simular (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+ /*   private void simular (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String lat = request.getParameter("lat");
 		String lon = request.getParameter("lon");
 		String grau = request.getParameter("grau");
@@ -37,15 +37,15 @@ public class SimuladorServlet extends HttpServlet {
 		String altitude = request.getParameter("altitude");
 		String velocidade = request.getParameter("velocidade");
 		WSocket.broadcast(lat+","+lon+","+velocidade+","+","+altitude+","+","+grau+","+hex+","+status);
-    }
+    }*/
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
+/*		String action = request.getParameter("action");
 		if(action.equals("simular")) this.simular(request, response);
-	}
+*/	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

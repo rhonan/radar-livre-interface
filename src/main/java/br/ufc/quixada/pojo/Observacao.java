@@ -1,75 +1,97 @@
 package br.ufc.quixada.pojo;
 
-public class Observacao {
+import javax.xml.bind.annotation.XmlRootElement;
 
-	private double latitude;
-	private double longitude;
-	private String aeronave_hex;
-	private String status;
-	private int grau;
-	private double velocidade;
-	private int altitude;
+@XmlRootElement(name="observacao")
+
+public class Observacao {
 	
-	public Observacao(double latitude, double longitude, double velocidade, int altitude, int grau, String aeronave_hex, String status){
+	private String radar;
+	private String latitude;
+	private String longitude;
+	private String altitude;
+	private String velocidade;
+	private String angulo;
+	private String hora;
+	private String roda_id;
+	private String hex;
+	
+	public Observacao(String radar, String latitude, String longitude,
+			String altitude, String velocidade, String angulo, String hora,
+			String roda_id, String hex) {
+		super();
+		this.radar = radar;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.velocidade = velocidade;
 		this.altitude = altitude;
-		this.grau = grau;
-		this.aeronave_hex = aeronave_hex;
-		this.status = status;
+		this.velocidade = velocidade;
+		this.angulo = angulo;
+		this.hora = hora;
+		this.roda_id = roda_id;
+		this.hex = hex;
 	}
 	
-	public double getLatitude() {
+	public Observacao(){
+		
+	}
+	
+	public String getRadar() {
+		return radar;
+	}
+	public void setRadar(String radar) {
+		this.radar = radar;
+	}
+	public String getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-	public double getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(double longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	
-	public String getAeronave_hex() {
-		return aeronave_hex;
-	}
-	public void setAeronave_hex(String aeronave_hex) {
-		this.aeronave_hex = aeronave_hex;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public int getGrau() {
-		return grau;
-	}
-
-	public void setGrau(int grau) {
-		this.grau = grau;
-	}
-
-	public double getVelocidade() {
-		return velocidade;
-	}
-
-	public void setVelocidade(double velocidade) {
-		this.velocidade = velocidade;
-	}
-
-	public int getAltitude() {
+	public String getAltitude() {
 		return altitude;
 	}
-
-	public void setAltitude(int altitude) {
+	public void setAltitude(String altitude) {
 		this.altitude = altitude;
 	}
-
+	public String getVelocidade() {
+		return velocidade;
+	}
+	public void setVelocidade(String velocidade) {
+		this.velocidade = velocidade;
+	}
+	public String getAngulo() {
+		return angulo;
+	}
+	public void setAngulo(String angulo) {
+		this.angulo = angulo;
+	}
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
+	public String getRoda_id() {
+		return roda_id;
+	}
+	public void setRoda_id(String roda_id) {
+		this.roda_id = roda_id;
+	}
+	public String getHex() {
+		return hex;
+	}
+	public void setHex(String hex) {
+		this.hex = hex;
+	}
+	
+	public void removerAspas(){
+		hex = hex.replace("'", "");
+		hora = hora.replace("'", "");
+	}
 }

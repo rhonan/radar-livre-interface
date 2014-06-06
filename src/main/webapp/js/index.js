@@ -15,8 +15,26 @@ $(document).ready(function(){
 	
 	websocket.onopen = function(event) { onOpen(event); };
 	websocket.onmessage = function(event) { onMessage(event); };
+	
+	var timer = setInterval(function(){myTimer();},20000);
 
+	function myTimer() {
+		console.log("Timer passando");
+		$.each(marcadores, function (key, val){
+			if(toTimestamp(val.hora) < ($.now() - 120000)){
+				console.log("Removendo")
+				val.setMap(null);
+				marcadores.remove(val);
+			}
+		});
+	}
+	
 });
+
+function toTimestamp(strDate){
+	var datum = Date.parse(strDate);
+	return datum;
+}
 
 function inicializarMapa() {
     var mapOptions = {
@@ -37,11 +55,31 @@ function onOpen(event){
 
 }
 
+function jaExiste(aeronave){
+	var aux = 0;
+	$.each(marcadores, function (key, val){
+		if(val.title == aeronave.hex){
+			aux++;
+		}
+	});
+	if(aux == 0){
+		return false;
+	}else{
+		return true;
+	}
+}
+
 function onMessage(event){
 	var aeronave = JSON.parse(event.data);
 	
 	$.each(aeronave, function(key, val){
-		adicionarMarcador(val);
+		if(jaExiste(val)){
+			console.log("Atualizando");
+			atualizarMarcador(val);
+		}else{
+			console.log("Adicionando");
+			adicionarMarcador(val);
+		}
 	});
 	
 /*	switch(aeronave.status){
@@ -66,32 +104,60 @@ function adicionarMarcador(aeronave){
 		position: new google.maps.LatLng(aeronave.latitude, aeronave.longitude),
         map: map,
         icon: image,
-        title: aeronave.aeronave_hex
+        title: aeronave.hex,
+        hora: aeronave.hora
 	});
 	marcadores.push(marcador);
 	google.maps.event.addListener(marcador, 'click', function() {
 		$.sidr('open', 'sidr');
-		$("#hex").text(aeronave.aeronave_hex);
+		$("#hex").text(aeronave.hex);
 		$("#latitude").text(aeronave.latitude);
 		$("#longitude").text(aeronave.longitude);
+		$("#altitude").text(aeronave.altitude);
 		$("#grau").text(aeronave.grau);
+		$("#velocidade").text(aeronave.velocidade);
+		$("#hora").text(aeronave.hora);
 	});
 }
 
-function removerMarcador(aeronave){
-	$.each(marcadores, function (key, val){
-		if(val.title == aeronave.aeronave_hex){
-			val.setMap(null);
-		}
-	});
-	marcadores.remove(aeronave);
-}
+//function removerMarcador(aeronave){
+//	$.each(marcadores, function (key, val){
+//		if(val.title == aeronave.hex){
+//			val.setMap(null);
+//		}
+//	});
+//	marcadores.remove(aeronave);
+//}
 
 function atualizarMarcador(aeronave){ 
 	$.each(marcadores, function (key, val){
-		if(val.title == aeronave.aeronave_hex){
-			val.setPosition(new google.maps.LatLng(aeronave.latitude, aeronave.longitude));
-			val.setIcon(new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12)));
+		if(val.title == aeronave.hex){
+			if(aeronave.latitude != null){
+				val.setPosition(new google.maps.LatLng(aeronave.latitude, aeronave.longitude));
+			}
+			if(aeronave.grau != null){
+				val.setIcon(new google.maps.MarkerImage('img/aeronaves/rotacionado'+ aeronave.grau +'.png',new google.maps.Size(25,25),new google.maps.Point(0,0),new google.maps.Point(13,12)));
+			}
+			google.maps.event.addListener(val, 'click', function() {
+				$.sidr('open', 'sidr');
+				$("#hex").text(aeronave.hex);
+				if(aeronave.latitude != null){
+					$("#latitude").text(aeronave.latitude);
+					$("#longitude").text(aeronave.longitude);
+				}
+				if(aeronave.altitude != null){
+					$("#altitude").text(aeronave.altitude);
+				}
+				if(aeronave.grau != null){
+					$("#grau").text(aeronave.grau);
+				}
+				if(aeronave.velocidade != null){
+					$("#velocidade").text(aeronave.velocidade);
+				}
+				$("#hora").text(aeronave.hora);
+			});
+			val.hora = aeronave.hora;
+			console.log(val.hora);
 		}
 	});
 }
